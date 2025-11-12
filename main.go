@@ -11,6 +11,6 @@ func main() {
 	global.Config = core.ReadConf()
 	core.InitLogrus()
 	global.DB = core.InitDB()
-
+	flags.Run()
 	// 启动 web 程序
 }

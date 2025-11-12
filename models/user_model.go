@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type UserModel struct {
 	Model
 	Username       string `gorm:"size:32"  json:"username"`
@@ -11,4 +13,15 @@ type UserModel struct {
 	Password       string `gorm:"size:64"  json:"-"` // 密码不返回给前端
 	Email          string `gorm:"size:256" json:"email"`
 	OpenID         string `gorm:"size:64"  json:"openID"` // 第三方登录的唯一 id
+}
+
+type UserConfModel struct {
+	UserID             uint       `gorm:"unique" json:"userID"`
+	UserModel          UserModel  `gorm:"foreignKey:UserID" json:"-"`
+	LikeTags           []string   `gorm:"type:longtext;serializer:json" json:"likeTags"`
+	UpdateUsernameDate *time.Time `json:"updateUsernameDate"` // 上次修改用户名的时间
+	OpenCollect        bool       `json:"openCollect"`        // 公开我的收藏
+	OpenFollow         bool       `json:"openFollow"`         // 公开我的关注
+	OpenFans           bool       `json:"openFans"`           // 公开我的粉丝
+	HomeStyleID        uint       `json:"homeStyleID"`        // 主页样式的id
 }

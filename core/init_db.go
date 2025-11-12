@@ -37,8 +37,8 @@ func InitDB() *gorm.DB {
 		// 读写库不是空的，那就注册读写分离的配置
 		err = db.Use(dbresolver.Register(dbresolver.Config{
 			// use `db2` as sources, `db3`, `db4` as replicas
-			Sources:  []gorm.Dialector{mysql.Open(dc1.DSN())},                       //写
-			Replicas: []gorm.Dialector{mysql.Open(dc.DSN()), mysql.Open("db4_dsn")}, //读
+			Sources:  []gorm.Dialector{mysql.Open(dc1.DSN())}, //写
+			Replicas: []gorm.Dialector{mysql.Open(dc.DSN())},  //读
 			// sources/replicas load balancing policy
 			Policy: dbresolver.RandomPolicy{},
 		}))

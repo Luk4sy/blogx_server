@@ -23,6 +23,7 @@ func Parse() {
 func Run() {
 	if FlagOptions.DB {
 		// 执行数据库迁移
+		FlagDB()
 		os.Exit(0)
 	}
 }
