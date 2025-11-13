@@ -6,10 +6,12 @@ import (
 	"blogx_server/models"
 	"blogx_server/models/enum"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"io"
+	"reflect"
 	"strings"
 )
 
@@ -36,8 +38,43 @@ func (ac *ActionLog) ShowResponse() {
 func (ac *ActionLog) SetTitle(title string) {
 	ac.title = title
 }
-func (ac *ActionLog) SeteLevel(level enum.LogLevelType) {
+func (ac *ActionLog) SetLevel(level enum.LogLevelType) {
 	ac.level = level
+}
+
+func (ac *ActionLog) setItem(label string, value any, levelType enum.LogLevelType) {
+
+	var v string
+	t := reflect.TypeOf(value)
+	switch t.Kind() {
+	case reflect.Struct, reflect.Map, reflect.Slice:
+		byteData, _ := json.Marshal(value)
+		v = string(byteData)
+	default:
+		v = fmt.Sprintf("%v", value)
+	}
+
+	ac.itemList = append(ac.itemList, fmt.Sprintf(`<div class="log_item %s"><div class="log_item_label">%s</div><div class="log_item_content">%s</div></div>`,
+		levelType,
+		label,
+		v,
+	))
+}
+
+func (ac *ActionLog) SetItem(label string, value any) {
+	ac.setItem(label, value, enum.LogInfoLevel)
+}
+
+func (ac *ActionLog) SetItemInfo(label string, value any) {
+	ac.setItem(label, value, enum.LogInfoLevel)
+}
+
+func (ac *ActionLog) SetItemWarn(label string, value any) {
+	ac.setItem(label, value, enum.LogWarnLevel)
+}
+
+func (ac *ActionLog) SetItemError(label string, value any) {
+	ac.setItem(label, value, enum.LogErrLevel)
 }
 
 func (ac *ActionLog) SetRequest(c *gin.Context) {
@@ -63,20 +100,18 @@ func (ac *ActionLog) Save() {
 		return
 	}
 
+	var newItemList []string
 	// 设置请求
 	if ac.showRequest {
-		ac.itemList = append(ac.itemList, fmt.Sprintf("<div class=\"log_request\">\n<div class=\"log_request_head\">\n<span class=\"log_request_method delete\">%s</span>\n<span class=\"log_request_path\">/%s</span>\n</div>\n<div class=\"log_request_body\">\n<pre class=\"log_json_body\">%s</pre>\n</div>\n</div>\n",
-			ac.c.Request.Method,
-			ac.c.Request.URL.String(),
-			string(ac.requestBody),
-		))
+		newItemList = append(newItemList, fmt.Sprintf("<div class=\"log_request\">\n<div class=\"log_request_head\">\n<span class=\"log_request_method delete\">%s</span>\n<span class=\"log_request_path\">/%s</span>\n</div>\n<div class=\"log_request_body\">\n<pre class=\"log_json_body\">%s</pre>\n</div>\n</div>\n", ac.c.Request.Method, ac.c.Request.URL.String(), string(ac.requestBody)))
 	}
 
-	// 中间的一些content
+	// 中间一些content
+	newItemList = append(newItemList, ac.itemList...)
 
 	// 设置响应
 	if ac.showResponse {
-		ac.itemList = append(ac.itemList, fmt.Sprintf("<div class=\"log_response\"><pre class=\"log_json_body\">%s</pre></div>\n",
+		newItemList = append(newItemList, fmt.Sprintf("<div class=\"log_response\"><pre class=\"log_json_body\">%s</pre></div>\n",
 			string(ac.responseBody)))
 	}
 
