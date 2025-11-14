@@ -44,7 +44,7 @@ func (SiteApi) SiteUpdateView(c *gin.Context) {
 	log.SetItemInfo("切片", []string{"a", "b"})
 	log.SetItemInfo("字符串", "hello")
 	log.SetItemInfo("数字", 123)
-
-	c.JSON(200, gin.H{"code": 0, "msg": "站点信息"})
+	id := log.Save()
+	c.JSON(200, gin.H{"code": 0, "msg": "站点信息", "data": id})
 	return
 }
