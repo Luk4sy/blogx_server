@@ -1,11 +1,10 @@
 package log_api
 
 import (
+	"blogx_server/common"
 	"blogx_server/common/res"
-	"blogx_server/global"
 	"blogx_server/models"
 	"blogx_server/models/enum"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,9 +12,7 @@ type LogApi struct {
 }
 
 type LogListRequest struct {
-	Limit       int               `form:"limit"`
-	Page        int               `form:"page"`
-	Key         string            `form:"key"`
+	common.PageInfo
 	LogType     enum.LogType      `form:"logType"`
 	Level       enum.LogLevelType `form:"level"`
 	UserID      uint              `form:"userID"`
@@ -38,32 +35,20 @@ func (LogApi) LogListView(c *gin.Context) {
 		res.FailWithError(err, c)
 	}
 
-	var list []models.LogModel
-	if cr.Page > 20 {
-		cr.Page = 1
-	}
-	if cr.Page <= 0 {
-		cr.Page = 1
-	}
-	if cr.Limit == 0 || cr.Limit > 100 {
-		cr.Limit = 10
-	}
-	offset := (cr.Page - 1) * cr.Limit
-
-	model := models.LogModel{
+	list, count, err := common.ListQuery(models.LogModel{
 		LogType:     cr.LogType,
 		Level:       cr.Level,
 		UserID:      cr.UserID,
 		IP:          cr.IP,
 		LoginStatus: cr.LoginStatus,
 		ServiceName: cr.ServiceName,
-	}
-	like := global.DB.Where("title like ?", fmt.Sprintf("%%%s%%", cr.Key))
-
-	global.DB.Preload("UserModel").Debug().Where(like).Where(model).Offset(offset).Limit(cr.Limit).Find(&list)
-
-	var count int64
-	global.DB.Debug().Where(like).Where(model).Model(models.LogModel{}).Count(&count)
+	}, common.Options{
+		PageInfo:     cr.PageInfo,
+		Likes:        []string{"title"},
+		Preloads:     []string{"UserModel"},
+		Debug:        true,
+		DefaultOrder: "created_at desc",
+	})
 
 	var _list = make([]LogListResponse, 0)
 	for _, logModel := range list {
