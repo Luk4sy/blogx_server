@@ -6,6 +6,8 @@ import (
 	"blogx_server/global"
 	"blogx_server/models"
 	"blogx_server/models/enum"
+	"blogx_server/service/log_service"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -81,4 +83,27 @@ func (LogApi) LogReadView(c *gin.Context) {
 		global.DB.Model(&log).Update("is_read", true)
 	}
 	res.OkWithMsg("日志读取成功", c)
+}
+
+func (LogApi) LogRemoveView(c *gin.Context) {
+	var cr models.RemoveRequest
+	err := c.ShouldBindJSON(&cr)
+	if err != nil {
+		res.FailWithError(err, c)
+		return
+	}
+	log := log_service.GetLog(c)
+	log.ShowRequest()
+	log.ShowResponse()
+
+	var logList []models.LogModel
+	global.DB.Find(&logList, "id in ?", cr.IDList)
+
+	if len(logList) > 0 {
+		global.DB.Delete(&logList)
+	}
+
+	msg := fmt.Sprintf("日志 删除成功，共删除%d条", len(logList))
+
+	res.OkWithMsg(msg, c)
 }
