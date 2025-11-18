@@ -6,6 +6,11 @@ system:
 log:
   app: blogx_server
   dir: logs
+ai:
+  enable: false
+  secretKey: wqq314t8209v5g80jvoad
+  nickName: Lukasy
+  avatar: /xxx/xxx
 jwt:
   expire: 3
   secret: xxx

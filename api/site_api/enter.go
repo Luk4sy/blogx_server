@@ -37,16 +37,22 @@ func (SiteApi) SiteInfoView(c *gin.Context) {
 
 	var data any
 	switch cr.Name {
-	case "site":
-		data = global.Config.Site
 	case "email":
-		data = global.Config.Email
+		rep := global.Config.Email
+		rep.AuthCode = "******"
+		data = rep
 	case "qq":
-		data = global.Config.QQ
+		rep := global.Config.QQ
+		rep.AppKey = "******"
+		data = rep
 	case "qiNiu":
-		data = global.Config.QiNiu
+		rep := global.Config.QiNiu
+		rep.SecretKey = "******"
+		data = rep
 	case "ai":
-		data = global.Config.Ai
+		rep := global.Config.Ai
+		rep.SecretKey = "******"
+		data = rep
 	default:
 		res.FailWithMsg("不存在的配置", c)
 		return
