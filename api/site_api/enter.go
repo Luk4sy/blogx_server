@@ -61,6 +61,10 @@ func (SiteApi) SiteInfoView(c *gin.Context) {
 	return
 }
 
+func (SiteApi) SiteInfoQQView(c *gin.Context) {
+	res.OkWithData(global.Config.QQ.Url(), c)
+}
+
 type SiteUpdateRequest struct {
 	Name string `json:"name" binding:"required"`
 }
