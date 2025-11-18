@@ -14,9 +14,9 @@ func main() {
 	core.InitLogrus()
 	token, err := jwts.GetToken(jwts.Claims{
 		UserID: 2,
-		Role:   1,
+		Role:   2,
 	})
 	fmt.Println(token, err)
-	cls, err := jwts.ParseToken(token)
-	fmt.Println(cls, err)
+	//cls, err := jwts.ParseToken(token)
+	//fmt.Println(cls, err)
 }
