@@ -4,6 +4,7 @@ import (
 	"blogx_server/global"
 	"blogx_server/utils/jwts"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"time"
 )
@@ -18,6 +19,18 @@ const (
 
 func (b BlackListType) String() string {
 	return fmt.Sprintf("%d", b)
+}
+
+func (b BlackListType) Msg() string {
+	switch b {
+	case UserBlackListType:
+		return "已注销"
+	case AdminBlackListType:
+		return "禁止登录"
+	case DeviceBlackListType:
+		return "设备下线"
+	}
+	return "已注销"
 }
 
 func ParseBlackLitType(val string) BlackListType {
@@ -55,4 +68,12 @@ func HasTokenBlackList(token string) (blk BlackListType, ok bool) {
 	}
 	blk = ParseBlackLitType(value)
 	return blk, true
+}
+
+func HasTokenBlackListByGin(c *gin.Context) (blk BlackListType, ok bool) {
+	token := c.GetHeader("token")
+	if token == "" {
+		token = c.Query("token")
+	}
+	return HasTokenBlackList(token)
 }
