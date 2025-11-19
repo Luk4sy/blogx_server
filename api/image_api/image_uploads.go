@@ -27,7 +27,7 @@ func (ImageApi) ImageUploadView(c *gin.Context) {
 	}
 	// 后缀判断
 	filename := fileHeader.Filename
-	err = ImageSuffixJudge(filename)
+	sufix, err := ImageSuffixJudge(filename)
 	if err != nil {
 		res.FailWithError(err, c)
 		return
@@ -50,8 +50,9 @@ func (ImageApi) ImageUploadView(c *gin.Context) {
 		return
 	}
 
-	filePath := fmt.Sprintf("uploads/images/%s", global.Config.Upload.UploadDir, fileHeader.Filename)
+	// 文件名一样，但内容不一样
 
+	filePath := fmt.Sprintf("uploads/%s/%s.%s", global.Config.Upload.UploadDir, hash, sufix)
 	// 入库
 	model = models.ImageModel{
 		Filename: filename,
@@ -69,14 +70,15 @@ func (ImageApi) ImageUploadView(c *gin.Context) {
 	res.Ok(model.WebPath(), "图片上传成功", c)
 }
 
-func ImageSuffixJudge(filename string) (err error) {
+func ImageSuffixJudge(filename string) (suffix string, err error) {
 	_list := strings.Split(filename, ".")
 	if len(_list) == 1 {
-		return errors.New("错误的文件名")
+		err = errors.New("错误的文件名")
 	}
-	suffix := _list[len(_list)-1]
+	suffix = _list[len(_list)-1]
 	if !utils.InList(suffix, global.Config.Upload.WhiteList) {
-		return errors.New("文件非法")
+		err = errors.New("文件非法")
+		return
 	}
 	return
 }
