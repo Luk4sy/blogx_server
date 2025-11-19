@@ -21,6 +21,7 @@ type Seo struct {
 type About struct {
 	SiteDate       string `yaml:"siteDate" json:"siteDate"` // 年月日
 	QQQrCode       string `yaml:"qqQrCode" json:"QQQrCode"`
+	Version        string `yaml:"-" json:"version"`
 	WechatQrCode   string `yaml:"wechatQrCode" json:"wechatQrCode"`
 	GiteeQrCode    string `yaml:"giteeQrCode" json:"giteeQrCode"`
 	BilibiliQrCode string `yaml:"bilibiliQrCode" json:"bilibiliQrCode"`
