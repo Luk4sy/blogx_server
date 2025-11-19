@@ -32,17 +32,17 @@ redis:
   db: 2
 site:
   siteInfo:
-    title: WunderMinibar
+    title: 个人博客
     logo: ""
     icpNo: ""
     mode: 1
   project:
-    title: ""
-    icon: ""
-    webPath: ""
+    title: 个人文章
+    icon: /qqq.png
+    webPath: uploads/index.html
   seo:
-    keywords: ""
-    description: ""
+    keywords: pjx
+    description: pjx description
   about:
     siteDate: ""
     qqQrCode: ""
