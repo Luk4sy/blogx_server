@@ -20,6 +20,7 @@ func Run() {
 	ImageRouter(nr)
 	BannerRouter(nr)
 	CaptchaRouter(nr)
+	UserRouter(nr)
 
 	addr := global.Config.System.Addr() // 4️⃣ 从全局配置读取服务启动地址（如 :8080）
 	r.Run(addr)                         // 5️⃣ 启动 HTTP 服务
