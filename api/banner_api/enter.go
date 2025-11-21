@@ -18,6 +18,8 @@ type BannerCreateRequest struct {
 	Show  bool   `json:"show"`
 }
 
+// TODO: 解决代码冗余
+
 func (BannerApi) BannerCreateView(c *gin.Context) {
 	var cr BannerCreateRequest
 	err := c.ShouldBindJSON(&cr)

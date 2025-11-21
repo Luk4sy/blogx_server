@@ -47,7 +47,10 @@ func (UserApi) SendEmailView(c *gin.Context) {
 		logrus.Errorf("邮件发送失败 %s", err)
 		res.FailWithMsg("邮件发送失败", c)
 	}
-	global.CaptchaStore.Set(id, code)
+	global.EmailVerifyStore.Store(id, models.EmailStoreInfos{
+		Email: cr.Email,
+		Code:  code,
+	})
 	res.OkWithData(SendEmailResponse{
 		EmailID: id,
 	}, c)
