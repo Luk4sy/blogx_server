@@ -80,10 +80,10 @@ qq:
   appKey: ""
   redirect: http://xxxx
 qiNiu:
-  enable: false
-  accessKey: ""
-  secretKey: ""
-  bucket: ""
+  enable: true
+  accessKey: icpkjf5foaz6wKxmUDGPLef6zSDnwKqqoybtIKeU
+  secretKey: icpkjf5foaz6wKxmUDGPLef6zSDnwKqqoybtIKeU
+  bucket: wunderminibar
   uri: ""
   region: ""
   prefix: ""
