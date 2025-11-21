@@ -68,12 +68,12 @@ site:
   article:
     isFreeReview: false
 email:
-  domain: ""
-  port: 0
-  sendEmail: ""
-  authCode: ""
-  sendNickname: ""
-  isSSL: false
+  domain: smtp.qq.com
+  port: 587
+  sendEmail: 302597565@qq.com
+  authCode: zxlzyvpyejsqbgbh
+  sendNickname: WunderMinibar
+  isSSL: true
   isTLS: false
 qq:
   appId: "123456"
