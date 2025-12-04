@@ -74,12 +74,12 @@ qq:
 qiNiu:
   enable: true
   accessKey: icpkjf5foaz6wKxmUDGPLef6zSDnwKqqoybtIKeU
-  secretKey: icpkjf5foaz6wKxmUDGPLef6zSDnwKqqoybtIKeU
+  secretKey: nvHHUoC4jSj4kV6obNB6GTZ16Iv8ay_86m3ixylK
   bucket: wunderminibar
-  uri: ""
-  region: ""
-  prefix: ""
-  size: 0
+  uri: http://cdn.wunderminibar.com
+  region: z2
+  prefix: blogx
+  size: 5
 ai:
   enable: false
   secretKey: wqq314t8209v5g80jvoad
