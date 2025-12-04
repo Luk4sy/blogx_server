@@ -80,6 +80,7 @@ qiNiu:
   region: z2
   prefix: blogx
   size: 5
+  expiry: 60
 ai:
   enable: false
   secretKey: wqq314t8209v5g80jvoad

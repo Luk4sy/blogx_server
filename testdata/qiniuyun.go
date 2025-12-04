@@ -12,8 +12,9 @@ import (
 	"github.com/qiniu/go-sdk/v7/storagev2/credentials"
 	"github.com/qiniu/go-sdk/v7/storagev2/http_client"
 	"github.com/qiniu/go-sdk/v7/storagev2/uploader"
+	"github.com/qiniu/go-sdk/v7/storagev2/uptoken"
 	"io"
-	"os"
+	"time"
 )
 
 func SendFile(file string) (url string, err error) {
@@ -60,13 +61,29 @@ func SendReader(reader io.Reader) (url string, err error) {
 	}, nil)
 	return fmt.Sprintf("%s/%s", global.Config.QiNiu.Uri, key), err
 }
+
+func GenToken1() (token string, err error) {
+	mac := credentials.NewCredentials(global.Config.QiNiu.AccessKey, global.Config.QiNiu.SecretKey)
+	putPolicy, err := uptoken.NewPutPolicy(global.Config.QiNiu.Bucket, time.Now().Add(1*time.Minute))
+	if err != nil {
+		return
+	}
+	token, err = uptoken.NewSigner(putPolicy, mac).GetUpToken(context.Background())
+	if err != nil {
+		return
+	}
+	return
+}
+
 func main() {
 	flags.Parse()
 	global.Config = core.ReadConf()
 	core.InitLogrus()
 	//url, err := SendFile("uploads/images/0ee29a20ccdde43048fdc1c7a10f874-transformed.jpeg")
 	//fmt.Println(url, err)
-	file, _ := os.Open("uploads/images/0ee29a20ccdde43048fdc1c7a10f874-transformed.jpeg")
-	url, err := SendReader(file)
-	fmt.Println(url, err)
+	//file, _ := os.Open("uploads/images/0ee29a20ccdde43048fdc1c7a10f874-transformed.jpeg")
+	//url, err := SendReader(file)
+	//fmt.Println(url, err)
+
+	fmt.Println(GenToken1())
 }
