@@ -5,6 +5,7 @@ import (
 	"blogx_server/global"
 	"blogx_server/models"
 	"blogx_server/models/enum"
+	"blogx_server/service/user_service"
 	"blogx_server/utils/jwts"
 	"blogx_server/utils/pwd"
 	"fmt"
@@ -83,6 +84,6 @@ func (UserApi) RegisterEmailView(c *gin.Context) {
 		return
 	}
 
+	user_service.NewUserService(user).UserLogin(c)
 	res.OkWithData(token, c)
-
 }
