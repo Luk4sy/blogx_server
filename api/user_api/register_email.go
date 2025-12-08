@@ -44,6 +44,11 @@ func (UserApi) RegisterEmailView(c *gin.Context) {
 	}
 	global.EmailVerifyStore.Delete(cr.EmailID)
 
+	if !global.Config.Site.Login.EmailLogin {
+		res.FailWithMsg("站点未启用邮箱注册", c)
+		return
+	}
+
 	// 创建用户
 	uname := base64Captcha.RandText(6, "0123456789")
 

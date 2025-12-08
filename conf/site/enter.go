@@ -31,7 +31,7 @@ type About struct {
 type Login struct {
 	QQLogin          bool `yaml:"qqLogin" json:"qqLogin"`
 	UsernamePwdLogin bool `yaml:"usernamePwdLogin" json:"usernamePwdLogin"`
-	Email            bool `yaml:"email" json:"email"`
+	EmailLogin       bool `yaml:"emailLogin" json:"emailLogin"`
 	Captcha          bool `yaml:"captcha" json:"captcha"`
 }
 

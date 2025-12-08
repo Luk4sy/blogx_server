@@ -52,9 +52,9 @@ site:
     githubQr: ""
   login:
     qqLogin: false
-    usernamePwdLogin: false
+    usernamePwdLogin: true
     email: false
-    captcha: true
+    captcha: false
   indexRight:
     list: []
   article:
