@@ -1,0 +1,44 @@
+package user_api
+
+import (
+	"blogx_server/common/res"
+	"blogx_server/global"
+	"blogx_server/models"
+	"blogx_server/models/enum"
+	"blogx_server/utils/maps"
+	"github.com/gin-gonic/gin"
+)
+
+type AdminUserInfoUpdateRequest struct {
+	UserID   uint           `json:"userID" binding:"required"`
+	Username *string        `json:"username" s-u:"username"`
+	Nickname *string        `json:"nickname" s-u:"nickname"`
+	Avatar   *string        `json:"avatar" s-u:"avatar"`
+	Abstract *string        `json:"abstract" s-u:"abstract"`
+	Role     *enum.RoleType `json:"role" s-u:"role"`
+}
+
+func (UserApi) AdminUserInfoUpdateView(c *gin.Context) {
+	// TODO:用户头像或者名称违规处理
+	var cr AdminUserInfoUpdateRequest
+	err := c.ShouldBindJSON(&cr)
+	if err != nil {
+		res.FailWithError(err, c)
+		return
+	}
+	userMap := maps.StructToMap(cr, "s-u")
+	var user models.UserModel
+	err = global.DB.Take(&user, cr.UserID).Error
+	if err != nil {
+		res.FailWithMsg("用户不存在", c)
+		return
+	}
+
+	err = global.DB.Model(&user).Updates(userMap).Error
+	if err != nil {
+		res.FailWithMsg("用户信息修改失败", c)
+		return
+	}
+
+	res.OkWithMsg("用户信息修改成功", c)
+}

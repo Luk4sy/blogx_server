@@ -23,6 +23,7 @@ type UserInfoUpdateRequest struct {
 }
 
 func (UserApi) UserInfoUpdateView(c *gin.Context) {
+	// TODO:用户头像或者名称违规处理
 	var cr UserInfoUpdateRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {
