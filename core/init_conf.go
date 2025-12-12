@@ -11,9 +11,7 @@ import (
 )
 
 func ReadConf() (c *conf.Config) {
-	//TODO: 测试完没问题可以删了
 	fmt.Printf("准备读取配置文件: %q\n", flags.FlagOptions.File)
-
 	byteData, err := os.ReadFile(flags.FlagOptions.File)
 	if err != nil {
 		panic(err)

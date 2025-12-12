@@ -3,10 +3,12 @@ package user_api
 import (
 	"blogx_server/common/res"
 	"blogx_server/global"
+	"blogx_server/middleware"
 	"blogx_server/models"
 	"blogx_server/service/user_service"
 	"blogx_server/utils/jwts"
 	"blogx_server/utils/pwd"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,18 +18,17 @@ type PwdLoginRequest struct {
 }
 
 func (UserApi) PwdLoginApi(c *gin.Context) {
-	var cr PwdLoginRequest
-	err := c.ShouldBindJSON(&cr)
-	if err != nil {
-		res.FailWithError(err, c)
-	}
+
+	cr := middleware.GetBind[PwdLoginRequest](c)
+	fmt.Println(cr)
+
 	if !global.Config.Site.Login.UsernamePwdLogin {
 		res.FailWithMsg("站点未启用密码登录", c)
 		return
 	}
 
 	var user models.UserModel
-	err = global.DB.Take(&user, "(username = ? or email = ?) and password <> ''",
+	err := global.DB.Take(&user, "(username = ? or email = ?) and password <> ''",
 		cr.Val, cr.Val).Error
 	if err != nil {
 		res.FailWithMsg("用户名密码错误", c)
