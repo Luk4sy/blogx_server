@@ -32,7 +32,7 @@ func (u *UserModel) CodeAge() int {
 }
 
 type UserConfModel struct {
-	UserID             uint       `gorm:"unique" json:"userID"`
+	UserID             uint       `gorm:"primaryKey;unique" json:"userID"`
 	UserModel          UserModel  `gorm:"foreignKey:UserID" json:"-"`
 	LikeTags           []string   `gorm:"type:longtext;serializer:json" json:"likeTags"`
 	UpdateUsernameDate *time.Time `json:"updateUsernameDate"` // 上次修改用户名的时间

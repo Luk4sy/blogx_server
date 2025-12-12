@@ -6,7 +6,6 @@ import (
 	"blogx_server/models"
 	"blogx_server/utils/jwts"
 	"blogx_server/utils/maps"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"time"
 )
@@ -32,21 +31,22 @@ func (UserApi) UserInfoUpdateView(c *gin.Context) {
 	}
 	userMap := maps.StructToMap(cr, "s-u")
 	userConfMap := maps.StructToMap(cr, "s-u-c")
-	fmt.Println("userMap", userMap)
-	fmt.Println("userConfMap", userConfMap)
 
 	claims := jwts.GetClaims(c)
 
-	if len(userMap) > 0 {
-		var userModel models.UserModel
-		err = global.DB.Preload("UserConfModel").Take(&userModel, claims.UserID).Error
-		if err != nil {
-			res.FailWithMsg("用户不存在", c)
-			return
-		}
+	// 【修改点 1】：把查询 userModel 移到最外面！
+	// 无论是否更新 userMap，我们都需要先拿到当前用户的数据（因为后面更新配置也需要用到 UserConfModel 的 ID）
+	var userModel models.UserModel
+	err = global.DB.Preload("UserConfModel").Take(&userModel, claims.UserID).Error
+	if err != nil {
+		res.FailWithMsg("用户不存在", c)
+		return
+	}
 
-		// 判断
-		if cr.Username != nil {
+	// ================= 处理 User 表更新 =================
+	if len(userMap) > 0 {
+		// 判断是否修改了用户名
+		if cr.Username != nil && *cr.Username != userModel.Username {
 			var userCount int64
 			global.DB.Model(models.UserModel{}).
 				Where("username = ? and id <> ?", *cr.Username, claims.UserID).
@@ -55,14 +55,18 @@ func (UserApi) UserInfoUpdateView(c *gin.Context) {
 				res.FailWithMsg("用户名被使用", c)
 				return
 			}
+
+			// 检查距离上次修改是否超过 30 天 (720小时)
 			var uud = userModel.UserConfModel.UpdateUsernameDate
-			if userModel.UserConfModel.UpdateUsernameDate != nil {
-				if time.Now().Sub(*uud).Hours() < 720 {
-					res.FailWithMsg("用户名30天内修改一次", c)
+			if uud != nil {
+				if time.Since(*uud).Hours() < 720 {
+					res.FailWithMsg("用户名30天内只能修改一次", c)
 					return
 				}
 			}
-			userConfMap["update_username_data"] = time.Now()
+			// 如果用户名改了，记录修改时间到 userConfMap 中
+			// 注意：这里 userConfMap 可能会因此增加一个字段
+			userConfMap["update_username_date"] = time.Now()
 		}
 
 		err = global.DB.Model(&userModel).Updates(userMap).Error
@@ -70,10 +74,21 @@ func (UserApi) UserInfoUpdateView(c *gin.Context) {
 			res.FailWithMsg("用户信息修改失败", c)
 			return
 		}
-		if len(userConfMap) > 0 {
-
-		}
-
-		res.OkWithMsg("用户信息修改成功", c)
 	}
+
+	// ================= 处理 UserConf 表更新 =================
+	// 【修改点 2】：把这段逻辑拿出来，变成“并列”关系，而不是“嵌套”关系
+	// 这样即使 userMap 为空（只改配置），这里也能执行到
+	if len(userConfMap) > 0 {
+		// 【修改点 3】：直接使用 userModel.UserConfModel
+		// 因为上面 Preload 已经加载出来了，不需要再 global.DB.Take 查一次了
+		// GORM 更新必须传指针 (&Struct)，否则不知道表名
+		err = global.DB.Model(&userModel.UserConfModel).Updates(userConfMap).Error
+		if err != nil {
+			res.FailWithMsg("用户配置信息修改失败", c)
+			return
+		}
+	}
+
+	res.OkWithMsg("用户信息修改成功", c)
 }
