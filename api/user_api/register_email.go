@@ -53,6 +53,9 @@ func (UserApi) RegisterEmailView(c *gin.Context) {
 	// 创建用户
 	uname := base64Captcha.RandText(6, "0123456789")
 
+	_email, _ := c.Get("email")
+	email := _email.(string)
+
 	// 密码加密
 	hashPwd, _ := pwd.GenerateFromPassword(cr.Pwd)
 
@@ -62,7 +65,7 @@ func (UserApi) RegisterEmailView(c *gin.Context) {
 		Avatar:         "",
 		RegisterSource: enum.RegisterEmailSourceType,
 		Password:       hashPwd,
-		Email:          info.Email,
+		Email:          email,
 		Role:           enum.UserRole,
 	}
 
