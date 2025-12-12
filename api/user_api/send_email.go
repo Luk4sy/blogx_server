@@ -4,7 +4,9 @@ import (
 	"blogx_server/common/res"
 	"blogx_server/global"
 	"blogx_server/models"
+	"blogx_server/models/enum"
 	"blogx_server/service/email_service"
+	"blogx_server/utils/email_store"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
 	"github.com/sirupsen/logrus"
@@ -46,16 +48,24 @@ func (UserApi) SendEmailView(c *gin.Context) {
 		}
 		err = email_service.SendRegisterCode(cr.Email, code)
 	case 2:
+		var user models.UserModel
+		err = global.DB.Take(&user, "email = ?", cr.Email).Error
+		if err != nil {
+			res.FailWithMsg("该邮箱不存在", c)
+			return
+		}
+		// 判断是否为邮箱注册
+		if user.RegisterSource != enum.RegisterEmailSourceType {
+			res.FailWithMsg("非邮箱注册用户，无重置密码权限", c)
+		}
 		err = email_service.SendResetPwdCode(cr.Email, code)
 	}
 	if err != nil {
 		logrus.Errorf("邮件发送失败 %s", err)
 		res.FailWithMsg("邮件发送失败", c)
 	}
-	global.EmailVerifyStore.Store(id, models.EmailStoreInfos{
-		Email: cr.Email,
-		Code:  code,
-	})
+	// 使用 email_store.Set 存储验证码及时间戳
+	email_store.Set(id, cr.Email, code)
 	res.OkWithData(SendEmailResponse{
 		EmailID: id,
 	}, c)
