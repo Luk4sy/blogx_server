@@ -51,6 +51,23 @@ services:
       blogx_network:
         ipv4_address: 10.2.0.3
 
+
+  es:
+    image: "elasticsearch:7.12.0"
+    restart: always
+    privileged: true
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - 9200:9200
+    volumes:
+      - ./es/data:/usr/share/elasticsearch/data
+    networks:
+      blogx_network:
+        ipv4_address: 10.2.0.4
+
+
 networks:
   blogx_network:
     driver: bridge

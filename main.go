@@ -13,7 +13,9 @@ func main() {
 	core.InitLogrus()               // 3. 初始化日志：core/init_logrus.go + logs
 	global.DB = core.InitDB()       // 4. 初始化数据库：core/init_db.go
 	global.Redis = core.InitRedis() // 初始化redis
-	flags.Run()                     // 5. 数据库迁移
+	global.ESClient = core.EsConnect()
+
+	flags.Run()
 
 	// 启动 web 程序
 	router.Run() // 启动 HTTP 服务：r.Run(...)
