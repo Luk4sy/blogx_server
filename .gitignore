@@ -7,3 +7,4 @@ uploads/*
 setting.yaml
 config.yaml
 testdata/
+.env
