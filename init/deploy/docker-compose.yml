@@ -1,34 +1,9 @@
 version: '3.2'
 services:
+  # ✅ 主库：必须保留，它是核心
   mysql-master:
-    image: "mysql:8.0"   # <--- 修改这里：改成 8.0
+    image: "mysql:8.0"
     container_name: mysql-master
-    restart: always
-    privileged: true
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PWD}
-      TZ: Asia/Shanghai  # 建议加上时区设置，防止时间差8小时
-    command:
-      # 8.0 必须保留这行，否则旧版客户端连不上
-      --default-authentication-plugin=mysql_native_password
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_general_ci
-      --explicit_defaults_for_timestamp=true
-      --lower_case_table_names=1
-    ports:
-      - 3307:3306  # <--- 保持修改：用 3307 避开本地的 3306
-    volumes:
-      - ./master/my.cnf:/etc/mysql/my.cnf
-      - ./master/mysql-files:/var/lib/mysql-files
-      - ./master/data:/var/lib/mysql
-      - ./master/log:/var/log/
-    networks:
-      blogx_network:
-        ipv4_address: 10.2.0.2
-
-  mysql-slave:
-    image: "mysql:8.0"   # <--- 修改这里：改成 8.0
-    container_name: mysql-slave
     restart: always
     privileged: true
     environment:
@@ -41,33 +16,59 @@ services:
       --explicit_defaults_for_timestamp=true
       --lower_case_table_names=1
     ports:
-      - 3308:3306  # <--- 注意：从库建议映射个端口出来方便调试，比如 3308
+      - 3307:3306
     volumes:
-      - ./slave/my.cnf:/etc/mysql/my.cnf
-      - ./slave/mysql-files:/var/lib/mysql-files
-      - ./slave/data:/var/lib/mysql
-      - ./slave/log:/var/log/
+      - ./master/my.cnf:/etc/mysql/my.cnf
+      - ./master/mysql-files:/var/lib/mysql-files
+      - ./master/data:/var/lib/mysql
+      - ./master/log:/var/log/
     networks:
       blogx_network:
-        ipv4_address: 10.2.0.3
+        ipv4_address: 10.2.0.2
 
+  # ❌ 从库：暂时注释掉，以后用的时候选中这块把 # 去掉即可
+  # mysql-slave:
+  #   image: "mysql:8.0"
+  #   container_name: mysql-slave
+  #   restart: always
+  #   privileged: true
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PWD}
+  #     TZ: Asia/Shanghai
+  #   command:
+  #     --default-authentication-plugin=mysql_native_password
+  #     --character-set-server=utf8mb4
+  #     --collation-server=utf8mb4_general_ci
+  #     --explicit_defaults_for_timestamp=true
+  #     --lower_case_table_names=1
+  #   ports:
+  #     - 3308:3306
+  #   volumes:
+  #     - ./slave/my.cnf:/etc/mysql/my.cnf
+  #     - ./slave/mysql-files:/var/lib/mysql-files
+  #     - ./slave/data:/var/lib/mysql
+  #     - ./slave/log:/var/log/
+  #   networks:
+  #     blogx_network:
+  #       ipv4_address: 10.2.0.3
 
-  es:
-    image: "elasticsearch:7.12.0"
-    restart: always
-    privileged: true
-    environment:
-      discovery.type: single-node
-      ES_JAVA_OPTS: "-Xms128m -Xmx128m"
-    ports:
-      - 9200:9200
-    volumes:
-      - ./es/data:/usr/share/elasticsearch/data
-    networks:
-      blogx_network:
-        ipv4_address: 10.2.0.4
+  # ❌ ES：暂时注释掉
+  # es:
+  #   image: "elasticsearch:7.12.0"
+  #   restart: always
+  #   privileged: true
+  #   environment:
+  #     discovery.type: single-node
+  #     ES_JAVA_OPTS: "-Xms128m -Xmx128m"
+  #   ports:
+  #     - 9200:9200
+  #   volumes:
+  #     - ./es/data:/usr/share/elasticsearch/data
+  #   networks:
+  #     blogx_network:
+  #       ipv4_address: 10.2.0.4
 
-
+# ✅ 网络配置：必须保留，因为 mysql-master 还在用它
 networks:
   blogx_network:
     driver: bridge

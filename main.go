@@ -17,7 +17,8 @@ func main() {
 
 	flags.Run()
 
-	core.InitMysqlES()
+	// 目前项目体量小，暂不启用
+	//core.InitMysqlES()
 
 	// 启动 web 程序
 	router.Run() // 启动 HTTP 服务：r.Run(...)
