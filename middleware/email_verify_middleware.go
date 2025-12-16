@@ -1,13 +1,13 @@
 package middleware
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/utils/email_store"
 	"bytes"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"io"
+	"minibar_server/common/res"
+	"minibar_server/utils/email_store"
 )
 
 type EmailVerifyMiddlewareRequest struct {

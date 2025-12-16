@@ -1,9 +1,9 @@
 package router
 
 import (
-	"blogx_server/api"
-	"blogx_server/middleware"
 	"github.com/gin-gonic/gin"
+	"minibar_server/api"
+	"minibar_server/middleware"
 )
 
 func LogRouter(rr *gin.RouterGroup) {

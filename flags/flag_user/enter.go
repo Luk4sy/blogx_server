@@ -1,13 +1,13 @@
 package flag_user
 
 import (
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/models/enum"
-	"blogx_server/utils/pwd"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh/terminal"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/models/enum"
+	"minibar_server/utils/pwd"
 	"os"
 )
 

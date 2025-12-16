@@ -1,9 +1,9 @@
 package core
 
 import (
-	"blogx_server/global"
-	river "blogx_server/service/river_service"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
+	river "minibar_server/service/river_service"
 )
 
 func InitMysqlES() {

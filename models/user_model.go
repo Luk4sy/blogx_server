@@ -1,9 +1,9 @@
 package models
 
 import (
-	"blogx_server/models/enum"
 	"gorm.io/gorm"
 	"math"
+	"minibar_server/models/enum"
 	"time"
 )
 

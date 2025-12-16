@@ -1,11 +1,11 @@
 package user_service
 
 import (
-	"blogx_server/core"
-	"blogx_server/global"
-	"blogx_server/models"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"minibar_server/core"
+	"minibar_server/global"
+	"minibar_server/models"
 )
 
 func (u UserService) UserLogin(c *gin.Context) {

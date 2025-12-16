@@ -1,9 +1,9 @@
 package common
 
 import (
-	"blogx_server/global"
 	"fmt"
 	"gorm.io/gorm"
+	"minibar_server/global"
 )
 
 type PageInfo struct {

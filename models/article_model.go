@@ -1,8 +1,8 @@
 package models
 
 import (
-	"blogx_server/models/ctype"
 	_ "embed"
+	"minibar_server/models/ctype"
 )
 
 type ArticleModel struct {

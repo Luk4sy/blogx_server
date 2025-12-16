@@ -1,6 +1,6 @@
 package models
 
-import "blogx_server/models/enum"
+import "minibar_server/models/enum"
 
 type LogModel struct {
 	Model

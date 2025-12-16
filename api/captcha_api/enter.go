@@ -1,11 +1,11 @@
 package captcha_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
 	"github.com/sirupsen/logrus"
+	"minibar_server/common/res"
+	"minibar_server/global"
 )
 
 type CaptchaApi struct {

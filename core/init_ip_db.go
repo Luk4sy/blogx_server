@@ -1,10 +1,10 @@
 package core
 
 import (
-	ipUtils "blogx_server/utils/ip"
 	"fmt"
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
 	"github.com/sirupsen/logrus"
+	ipUtils "minibar_server/utils/ip"
 	"strings"
 )
 

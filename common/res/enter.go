@@ -1,8 +1,8 @@
 package res
 
 import (
-	"blogx_server/utils/validate"
 	"github.com/gin-gonic/gin"
+	"minibar_server/utils/validate"
 )
 
 type Code int

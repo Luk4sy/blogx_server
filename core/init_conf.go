@@ -1,12 +1,12 @@
 package core
 
 import (
-	"blogx_server/conf"
-	"blogx_server/flags"
-	"blogx_server/global"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
+	"minibar_server/conf"
+	"minibar_server/flags"
+	"minibar_server/global"
 	"os"
 )
 

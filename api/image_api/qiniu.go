@@ -1,12 +1,12 @@
 package image_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/service/qiniu_service"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/service/qiniu_service"
 )
 
 type QiNiuGenTokenResponse struct {

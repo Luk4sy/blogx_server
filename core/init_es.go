@@ -1,9 +1,9 @@
 package core
 
 import (
-	"blogx_server/global"
 	"github.com/olivere/elastic/v7"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
 )
 
 func EsConnect() *elastic.Client {

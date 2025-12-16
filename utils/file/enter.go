@@ -1,9 +1,9 @@
 package file2
 
 import (
-	"blogx_server/global"
-	"blogx_server/utils"
 	"github.com/pkg/errors"
+	"minibar_server/global"
+	"minibar_server/utils"
 	"strings"
 )
 

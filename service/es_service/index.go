@@ -1,9 +1,9 @@
 package es_service
 
 import (
-	"blogx_server/global"
 	"context"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
 )
 
 func CreateIndexV2(index, mapping string) {

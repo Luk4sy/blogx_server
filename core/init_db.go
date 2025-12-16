@@ -1,12 +1,12 @@
 package core
 
 import (
-	"blogx_server/global"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
+	"minibar_server/global"
 	"time"
 )
 

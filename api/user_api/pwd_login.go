@@ -1,15 +1,15 @@
 package user_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/middleware"
-	"blogx_server/models"
-	"blogx_server/service/user_service"
-	"blogx_server/utils/jwts"
-	"blogx_server/utils/pwd"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/middleware"
+	"minibar_server/models"
+	"minibar_server/service/user_service"
+	"minibar_server/utils/jwts"
+	"minibar_server/utils/pwd"
 )
 
 type PwdLoginRequest struct {

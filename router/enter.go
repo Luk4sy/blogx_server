@@ -1,9 +1,9 @@
 package router
 
 import (
-	"blogx_server/global"
-	"blogx_server/middleware"
 	"github.com/gin-gonic/gin"
+	"minibar_server/global"
+	"minibar_server/middleware"
 )
 
 func Run() {

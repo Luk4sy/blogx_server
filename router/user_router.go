@@ -1,10 +1,10 @@
 package router
 
 import (
-	"blogx_server/api"
-	"blogx_server/api/user_api"
-	"blogx_server/middleware"
 	"github.com/gin-gonic/gin"
+	"minibar_server/api"
+	"minibar_server/api/user_api"
+	"minibar_server/middleware"
 )
 
 func UserRouter(r *gin.RouterGroup) {

@@ -1,12 +1,12 @@
 package log_service
 
 import (
-	"blogx_server/core"
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/models/enum"
-	"blogx_server/utils/jwts"
 	"github.com/gin-gonic/gin"
+	"minibar_server/core"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/models/enum"
+	"minibar_server/utils/jwts"
 )
 
 func NewLoginSuccess(c *gin.Context, loginType enum.LoginType) {

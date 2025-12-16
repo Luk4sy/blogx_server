@@ -1,9 +1,6 @@
 package qiniu_service
 
 import (
-	"blogx_server/global"
-	file2 "blogx_server/utils/file"
-	"blogx_server/utils/hash"
 	"context"
 	"fmt"
 	"github.com/google/uuid"
@@ -11,6 +8,9 @@ import (
 	"github.com/qiniu/go-sdk/v7/storagev2/http_client"
 	"github.com/qiniu/go-sdk/v7/storagev2/uploader"
 	"io"
+	"minibar_server/global"
+	file2 "minibar_server/utils/file"
+	"minibar_server/utils/hash"
 )
 
 func SendFile(file string) (url string, err error) {

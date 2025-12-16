@@ -1,11 +1,11 @@
 package global
 
 import (
-	"blogx_server/conf"
 	"github.com/go-redis/redis"
 	"github.com/mojocn/base64Captcha"
 	"github.com/olivere/elastic/v7"
 	"gorm.io/gorm"
+	"minibar_server/conf"
 	"sync"
 )
 

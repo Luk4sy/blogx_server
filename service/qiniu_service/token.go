@@ -1,10 +1,10 @@
 package qiniu_service
 
 import (
-	"blogx_server/global"
 	"context"
 	"github.com/qiniu/go-sdk/v7/storagev2/credentials"
 	"github.com/qiniu/go-sdk/v7/storagev2/uptoken"
+	"minibar_server/global"
 	"time"
 )
 

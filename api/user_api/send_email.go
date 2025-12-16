@@ -1,15 +1,15 @@
 package user_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/models/enum"
-	"blogx_server/service/email_service"
-	"blogx_server/utils/email_store"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
 	"github.com/sirupsen/logrus"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/models/enum"
+	"minibar_server/service/email_service"
+	"minibar_server/utils/email_store"
 )
 
 type SendEmailRequest struct {

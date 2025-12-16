@@ -1,11 +1,11 @@
 package redis_jwt
 
 import (
-	"blogx_server/global"
-	"blogx_server/utils/jwts"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
+	"minibar_server/utils/jwts"
 	"time"
 )
 

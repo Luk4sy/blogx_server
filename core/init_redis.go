@@ -1,9 +1,9 @@
 package core
 
 import (
-	"blogx_server/global"
 	"github.com/go-redis/redis"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
 )
 
 func InitRedis() *redis.Client {

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"blogx_server/core"
-	"blogx_server/flags"
-	"blogx_server/global"
-	"blogx_server/router"
+	"minibar_server/core"
+	"minibar_server/flags"
+	"minibar_server/global"
+	"minibar_server/router"
 )
 
 func main() {

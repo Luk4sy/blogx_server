@@ -1,12 +1,12 @@
 package jwts
 
 import (
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/models/enum"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/models/enum"
 	"strings"
 	"time"
 )

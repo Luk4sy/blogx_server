@@ -1,8 +1,8 @@
 package flags
 
 import (
-	"blogx_server/models"
-	"blogx_server/service/es_service"
+	"minibar_server/models"
+	"minibar_server/service/es_service"
 )
 
 func EsIndex() {

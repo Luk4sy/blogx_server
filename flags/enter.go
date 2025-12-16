@@ -1,8 +1,8 @@
 package flags
 
 import (
-	"blogx_server/flags/flag_user"
 	"flag"
+	"minibar_server/flags/flag_user"
 	"os"
 )
 

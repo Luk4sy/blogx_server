@@ -1,16 +1,16 @@
 package site_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/conf"
-	"blogx_server/core"
-	"blogx_server/global"
-	"blogx_server/middleware"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+	"minibar_server/common/res"
+	"minibar_server/conf"
+	"minibar_server/core"
+	"minibar_server/global"
+	"minibar_server/middleware"
 	"os"
 )
 

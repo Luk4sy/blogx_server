@@ -1,9 +1,9 @@
 package flags
 
 import (
-	"blogx_server/global"
-	"blogx_server/models"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
+	"minibar_server/models"
 )
 
 func FlagDB() {

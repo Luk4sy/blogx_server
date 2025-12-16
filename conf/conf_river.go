@@ -1,7 +1,7 @@
 package conf
 
 import (
-	"blogx_server/service/river_service/rule"
+	"minibar_server/service/river_service/rule"
 )
 
 type River struct {

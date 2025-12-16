@@ -1,8 +1,8 @@
 package router
 
 import (
-	"blogx_server/api"
 	"github.com/gin-gonic/gin"
+	"minibar_server/api"
 )
 
 func CaptchaRouter(r *gin.RouterGroup) {

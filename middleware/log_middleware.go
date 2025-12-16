@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"blogx_server/service/log_service"
 	"github.com/gin-gonic/gin"
+	"minibar_server/service/log_service"
 	"net/http"
 )
 

@@ -1,9 +1,9 @@
 package email_service
 
 import (
-	"blogx_server/global"
 	"fmt"
 	"github.com/jordan-wright/email"
+	"minibar_server/global"
 	"net/smtp"
 	"strings"
 )

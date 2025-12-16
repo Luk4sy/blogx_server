@@ -1,10 +1,10 @@
 package user_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/utils/jwts"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/utils/jwts"
 )
 
 func (UserApi) BindEmailView(c *gin.Context) {

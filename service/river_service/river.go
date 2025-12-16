@@ -1,12 +1,12 @@
 package river
 
 import (
-	"blogx_server/global"
-	"blogx_server/service/river_service/elastic"
-	"blogx_server/service/river_service/rule"
 	"context"
 	"fmt"
 	"github.com/pingcap/errors"
+	"minibar_server/global"
+	"minibar_server/service/river_service/elastic"
+	"minibar_server/service/river_service/rule"
 	"regexp"
 	"strings"
 	"sync"

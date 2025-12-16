@@ -1,13 +1,13 @@
 package log_service
 
 import (
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/models/enum"
 	"encoding/json"
 	"fmt"
 	e "github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/models/enum"
 	"reflect"
 	"strings"
 	"time"

@@ -1,14 +1,14 @@
 package log_api
 
 import (
-	"blogx_server/common"
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/models/enum"
-	"blogx_server/service/log_service"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/models/enum"
+	"minibar_server/service/log_service"
 )
 
 type LogApi struct {

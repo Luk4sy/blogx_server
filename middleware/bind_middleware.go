@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"blogx_server/common/res"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common/res"
 )
 
 func BindJsonMiddleware[T any](c *gin.Context) {

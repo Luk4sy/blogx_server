@@ -1,6 +1,6 @@
 package user_service
 
-import "blogx_server/models"
+import "minibar_server/models"
 
 type UserService struct {
 	userModel models.UserModel

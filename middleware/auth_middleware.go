@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/models/enum"
-	"blogx_server/service/redis_service/redis_jwt"
-	"blogx_server/utils/jwts"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common/res"
+	"minibar_server/models/enum"
+	"minibar_server/service/redis_service/redis_jwt"
+	"minibar_server/utils/jwts"
 )
 
 func AuthMiddleware(c *gin.Context) {

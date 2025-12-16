@@ -1,12 +1,12 @@
 package user_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/utils/jwts"
-	"blogx_server/utils/maps"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/utils/jwts"
+	"minibar_server/utils/maps"
 	"time"
 )
 

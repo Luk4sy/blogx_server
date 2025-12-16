@@ -1,12 +1,12 @@
 package banner_api
 
 import (
-	"blogx_server/common"
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/models"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"minibar_server/common"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/models"
 )
 
 type BannerApi struct {

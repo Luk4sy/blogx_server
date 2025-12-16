@@ -1,6 +1,6 @@
 package conf
 
-import "blogx_server/conf/site"
+import "minibar_server/conf/site"
 
 type Site struct {
 	SiteInfo   site.SiteInfo   `yaml:"siteInfo" json:"siteInfo"`

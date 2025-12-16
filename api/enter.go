@@ -1,12 +1,12 @@
 package api
 
 import (
-	"blogx_server/api/banner_api"
-	"blogx_server/api/captcha_api"
-	"blogx_server/api/image_api"
-	"blogx_server/api/log_api"
-	"blogx_server/api/site_api"
-	"blogx_server/api/user_api"
+	"minibar_server/api/banner_api"
+	"minibar_server/api/captcha_api"
+	"minibar_server/api/image_api"
+	"minibar_server/api/log_api"
+	"minibar_server/api/site_api"
+	"minibar_server/api/user_api"
 )
 
 type Api struct {

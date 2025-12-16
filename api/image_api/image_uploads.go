@@ -1,15 +1,15 @@
 package image_api
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
-	"blogx_server/models"
-	"blogx_server/utils"
-	"blogx_server/utils/file"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"io"
+	"minibar_server/common/res"
+	"minibar_server/global"
+	"minibar_server/models"
+	"minibar_server/utils"
+	"minibar_server/utils/file"
 )
 
 func (ImageApi) ImageUploadView(c *gin.Context) {

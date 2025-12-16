@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	"blogx_server/common/res"
-	"blogx_server/global"
 	"bytes"
 	"github.com/gin-gonic/gin"
 	"io"
+	"minibar_server/common/res"
+	"minibar_server/global"
 )
 
 type CaptchaMiddlewareRequest struct {
