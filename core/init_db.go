@@ -11,8 +11,10 @@ import (
 )
 
 func InitDB() *gorm.DB {
-	dc := global.Config.DB   // 读库
-	dc1 := global.Config.DB1 // 写库
+	if len(global.Config.DB) == 0 {
+		logrus.Fatalf("未配置数据库")
+	}
+	dc := global.Config.DB[0]
 
 	// test
 	fmt.Printf("DB config: host=%q port=%d user=%q db=%q dsn=%q\n",
@@ -33,12 +35,15 @@ func InitDB() *gorm.DB {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 	logrus.Infof("数据库连接成功")
 
-	if !dc1.Empty() {
-		// 读写库不是空的，那就注册读写分离的配置
+	if len(global.Config.DB) > 1 {
+		var readList []gorm.Dialector
+		for _, d := range global.Config.DB[1:] {
+			readList = append(readList, mysql.Open(d.DSN()))
+		}
 		err = db.Use(dbresolver.Register(dbresolver.Config{
 			// use `db2` as sources, `db3`, `db4` as replicas
-			Sources:  []gorm.Dialector{mysql.Open(dc1.DSN())}, //写
-			Replicas: []gorm.Dialector{mysql.Open(dc.DSN())},  //读
+			Sources:  []gorm.Dialector{mysql.Open(dc.DSN())}, //写
+			Replicas: readList,                               //读
 			// sources/replicas load balancing policy
 			Policy: dbresolver.RandomPolicy{},
 		}))
@@ -46,6 +51,5 @@ func InitDB() *gorm.DB {
 			logrus.Fatalf("读写配置错误 %s", err)
 		}
 	}
-
 	return db
 }
