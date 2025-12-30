@@ -2,6 +2,7 @@ package article_api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/microcosm-cc/bluemonday"
 	"minibar_server/common/res"
 	"minibar_server/global"
 	"minibar_server/middleware"
@@ -9,6 +10,7 @@ import (
 	"minibar_server/models/ctype"
 	"minibar_server/models/enum"
 	"minibar_server/utils/jwts"
+	"minibar_server/utils/markdown"
 )
 
 type ArticleCreateRequest struct {
@@ -31,9 +33,30 @@ func (ArticleApi) ArticleCreateView(c *gin.Context) {
 		return
 	}
 
-	// TODO:判断分类 id 是不是自己创建的
+	// 判断分类 id 是不是自己创建的
+	var category models.CategoryModel
+	if cr.CategoryID != nil {
+		err = global.DB.Take(&category, "id = ? and user_id = ?", *cr.CategoryID, user.ID).Error
+		if err != nil {
+			res.FailWithMsg("文章分类不存在", c)
+			return
+		}
+	}
 
 	// TODO:文章正文防 xss 注入
+	cr.Content = bluemonday.UGCPolicy().Sanitize(cr.Content)
+
+	// 如果清洗完发现内容没了（说明用户发的全是脚本），报错
+	if cr.Content == "" {
+		res.FailWithMsg("文章内容包含非法字符或为空", c)
+		return
+	}
+
+	// 如果未传如简介，自动从正文中取前 50 个字符
+	if cr.Abstract == "" {
+		// 把 markdown 转成 html，再取文本
+		cr.Abstract = markdown.GetAbstract(cr.Content, 50)
+	}
 
 	// TODO:正文内容图片转存
 
