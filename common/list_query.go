@@ -41,6 +41,7 @@ func (p PageInfo) GetOffset() int {
 	return (p.GetPage() - 1) * p.GetLimit()
 }
 
+// ListQuery 封装排序、模糊搜索、预加载、额外 where、分页、统计总数
 func ListQuery[T any](model T, option Options) (list []T, count int, err error) {
 
 	// 基础查询
@@ -63,12 +64,18 @@ func ListQuery[T any](model T, option Options) (list []T, count int, err error) 
 
 	// 模糊查询
 	if len(option.Likes) > 0 && option.PageInfo.Key != "" {
-		likes := global.DB.Where(model)
-		for _, column := range option.Likes {
-			likes.Or(
-				fmt.Sprintf("%s like ?", column),
-				fmt.Sprintf("%%%s%%", option.PageInfo.Key))
+		likes := global.DB.Session(&gorm.Session{NewDB: true}) // 新起一个干净 DB
+		key := fmt.Sprintf("%%%s%%", option.PageInfo.Key)
+
+		for i, column := range option.Likes {
+			cond := fmt.Sprintf("%s LIKE ?", column)
+			if i == 0 {
+				likes = likes.Where(cond, key)
+			} else {
+				likes = likes.Or(cond, key)
+			}
 		}
+
 		query = query.Where(likes)
 	}
 
@@ -84,7 +91,9 @@ func ListQuery[T any](model T, option Options) (list []T, count int, err error) 
 
 	// 总数查询
 	var _c int64
-	global.DB.Model(model).Count(&_c)
+	if err = query.Count(&_c).Error; err != nil {
+		return nil, 0, err
+	}
 	count = int(_c)
 
 	// 分页查询
